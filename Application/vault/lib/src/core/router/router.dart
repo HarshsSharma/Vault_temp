@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vault/src/modules/dashboard/dashboard_view.dart';
+import 'package:flutter/services.dart';
+import 'package:vault/src/core/components/side_nav_bar.dart';
 
 import '../components/persistent_nav_bar/item_model.dart';
 import '../components/persistent_nav_bar/persistent_nav_bar.dart';
@@ -14,12 +15,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => App(
               navModel: NavModel({
-            TabNavigatorRoutes.itemDetails: (context) => Scaffold(
-                  appBar: AppBar(
-                    title: const Text('Details'),
-                    backgroundColor: Colors.orangeAccent,
-                  ),
-                ),
+            TabNavigatorRoutes.itemDetails: (context) => const DetailsPage(),
           }, [
             ItemModel(
                 GlobalKey<NavigatorState>(), Icons.home, Home(), TabItem.home),
@@ -37,6 +33,35 @@ class AppRouter {
   }
 }
 
+class DetailsPage extends StatelessWidget {
+  const DetailsPage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+        ),
+        title: const Text('Details'),
+        elevation: 0,
+        backgroundColor: Colors.orangeAccent,
+      ),
+      endDrawer: SideNavBar(items: [
+        Item(label: 'Dashboard', icon: Icons.dashboard),
+        Item(label: 'Time Tracking', icon: Icons.access_time_rounded),
+        Item(label: 'Absences', icon: Icons.highlight_off_outlined),
+        Item(label: 'Desicion Center', icon: Icons.calendar_today_outlined),
+        Item(label: 'Business Trip', icon: Icons.airplanemode_active_rounded),
+        Item(label: 'Profile', icon: Icons.person),
+        Item(label: 'Logout', icon: Icons.logout),
+      ], name: 'Ali Hassan', job: 'Mobile Developer'),
+    );
+  }
+}
+
 class Profile extends StatelessWidget {
   const Profile({
     super.key,
@@ -51,7 +76,7 @@ class Profile extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(context, TabNavigatorRoutes.itemDetails);
             },
-            child: Text('Go To Details')),
+            child: const Text('Go To Details')),
       ),
     );
   }

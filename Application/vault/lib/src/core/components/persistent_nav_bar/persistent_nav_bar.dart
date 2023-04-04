@@ -61,6 +61,8 @@ class AppState extends State<App> {
                       e.navigatorKey, widget.navModel.routes))
                   .toList()),
           bottomNavigationBar: BottomNavigationBar(
+              selectedFontSize: 0,
+              unselectedFontSize: 0,
               onTap: (value) {
                 _selectTab(widget.navModel.items[value].tabItem);
               },
@@ -68,8 +70,10 @@ class AppState extends State<App> {
               selectedItemColor: Colors.amber,
               unselectedItemColor: Colors.grey,
               items: widget.navModel.items
-                  .map((e) =>
-                      BottomNavigationBarItem(icon: Icon(e.icon), label: ''))
+                  .map((e) => BottomNavigationBarItem(
+                        icon: Icon(e.icon),
+                        label: '',
+                      ))
                   .toList())),
     );
   }
