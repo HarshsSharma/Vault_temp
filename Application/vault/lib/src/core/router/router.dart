@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vault/src/core/components/side_nav_bar.dart';
+import 'package:vault/src/modules/time_off/time_off_view.dart';
 
 import '../components/persistent_nav_bar/item_model.dart';
 import '../components/persistent_nav_bar/persistent_nav_bar.dart';
@@ -17,14 +18,16 @@ class AppRouter {
               navModel: NavModel({
             TabNavigatorRoutes.itemDetails: (context) => const DetailsPage(),
           }, [
-            ItemModel(
-                GlobalKey<NavigatorState>(), Icons.home, Home(), TabItem.home),
-            ItemModel(GlobalKey<NavigatorState>(), Icons.search, Search(),
-                TabItem.search),
+            ItemModel(GlobalKey<NavigatorState>(), Icons.home, const TimeOff(),
+                TabItem.home, 'Home'),
+            ItemModel(GlobalKey<NavigatorState>(), Icons.search, const Search(),
+                TabItem.search, 'Search'),
             ItemModel(GlobalKey<NavigatorState>(), Icons.settings, Settings(),
-                TabItem.settings),
+                TabItem.settings, 'Settings'),
+            ItemModel(GlobalKey<NavigatorState>(), Icons.notifications_none,
+                const Profile(), TabItem.notification, 'Notifications'),
             ItemModel(GlobalKey<NavigatorState>(), Icons.person, Profile(),
-                TabItem.profile),
+                TabItem.profile, 'Profile'),
           ])),
         );
       default:

@@ -4,10 +4,12 @@ import 'package:vault/src/core/helper/enums/tab_item.dart';
 class ItemModel {
   final GlobalKey<NavigatorState> navigatorKey;
   final IconData icon;
+  final String label;
   final Widget screen;
   final TabItem tabItem;
 
-  ItemModel(this.navigatorKey, this.icon, this.screen, this.tabItem);
+  ItemModel(
+      this.navigatorKey, this.icon, this.screen, this.tabItem, this.label);
 }
 
 class NavModel {
