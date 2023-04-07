@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:vault/src/core/components/dropdown_widget.dart';
 import 'package:vault/src/core/components/side_nav_bar.dart';
 import 'package:vault/src/modules/time_off/time_off_view.dart';
+import 'package:vault/src/modules/time_tracking/time_tracking_view.dart';
 
+import '../../modules/time_tracking/view_model/time_tracking_controller.dart';
 import '../components/persistent_nav_bar/item_model.dart';
 import '../components/persistent_nav_bar/persistent_nav_bar.dart';
 import '../helper/enums/tab_item.dart';
@@ -14,21 +18,29 @@ class AppRouter {
       case '/':
         // return MaterialPageRoute(builder: (context) => const DashBoard());
         return MaterialPageRoute(
-          builder: (_) => App(
-              navModel: NavModel({
-            TabNavigatorRoutes.itemDetails: (context) => const DetailsPage(),
-          }, [
-            ItemModel(GlobalKey<NavigatorState>(), Icons.home, const TimeOff(),
-                TabItem.home, 'Home'),
-            ItemModel(GlobalKey<NavigatorState>(), Icons.search, const Search(),
-                TabItem.search, 'Search'),
-            ItemModel(GlobalKey<NavigatorState>(), Icons.settings, Settings(),
-                TabItem.settings, 'Settings'),
-            ItemModel(GlobalKey<NavigatorState>(), Icons.notifications_none,
-                const Profile(), TabItem.notification, 'Notifications'),
-            ItemModel(GlobalKey<NavigatorState>(), Icons.person, Profile(),
-                TabItem.profile, 'Profile'),
-          ])),
+          builder: (_) => MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                create: (context) => TimeTrackingViewModel(),
+                lazy: true,
+              ),
+            ],
+            child: App(
+                navModel: NavModel({
+              TabNavigatorRoutes.itemDetails: (context) => const DetailsPage(),
+            }, [
+              ItemModel(GlobalKey<NavigatorState>(), Icons.home,
+                  const TimeOff(), TabItem.home, 'Home'),
+              ItemModel(GlobalKey<NavigatorState>(), Icons.search,
+                  const TimeTracking(), TabItem.search, 'Search'),
+              ItemModel(GlobalKey<NavigatorState>(), Icons.settings, Settings(),
+                  TabItem.settings, 'Settings'),
+              ItemModel(GlobalKey<NavigatorState>(), Icons.notifications_none,
+                  const Profile(), TabItem.notification, 'Notifications'),
+              ItemModel(GlobalKey<NavigatorState>(), Icons.person, Profile(),
+                  TabItem.profile, 'Profile'),
+            ])),
+          ),
         );
       default:
         return null;
@@ -93,13 +105,77 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
-      body: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, TabNavigatorRoutes.itemDetails);
-            },
-            child: Text('Go To Details')),
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+        child: Column(
+          children: [
+            DropDownWidget(
+              data: const [
+                'ALi',
+                'Hassan',
+                'Abdalla',
+                'ALi',
+                'Hassan',
+                'Abdalla',
+                'ALi',
+                'Hassan',
+                'Abdalla'
+              ],
+              multiSelection: false,
+              isRequired: true,
+              labelText: 'Names',
+              onScrollEnd: (nextPage, value) async {},
+              loadData: () async {},
+            ),
+            DropDownWidget(
+              data: const [
+                'ALi',
+                'Hassan',
+                'Abdalla',
+                'ALi',
+                'Hassan',
+                'Abdalla'
+              ],
+              multiSelection: false,
+              isRequired: true,
+              labelText: 'Names',
+              onScrollEnd: (nextPage, value) {},
+              loadData: () async {},
+            ),
+            DropDownWidget(
+              data: const [
+                'ALi',
+                'Hassan',
+                'Abdalla',
+                'ALi',
+                'Hassan',
+                'Abdalla'
+              ],
+              multiSelection: false,
+              isRequired: true,
+              labelText: 'Names',
+              onScrollEnd: (nextPage, value) {},
+              loadData: () async {},
+            ),
+            const Spacer(),
+            DropDownWidget(
+              data: const [
+                'ALi',
+                'Hassan',
+                'Abdalla',
+                'ALi',
+                'Hassan',
+                'Abdalla'
+              ],
+              multiSelection: false,
+              isRequired: true,
+              labelText: 'Names',
+              onScrollEnd: (nextPage, value) {},
+              loadData: () async {},
+            ),
+          ],
+        ),
       ),
     );
   }
