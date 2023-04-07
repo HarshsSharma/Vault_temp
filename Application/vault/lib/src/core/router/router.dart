@@ -1,8 +1,12 @@
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:vault/src/core/components/dropdown_widget.dart';
 import 'package:vault/src/core/components/side_nav_bar.dart';
+import 'package:vault/src/core/helper/network/dio_helper.dart';
 import 'package:vault/src/modules/time_off/time_off_view.dart';
 import 'package:vault/src/modules/time_tracking/time_tracking_view.dart';
 
@@ -88,10 +92,16 @@ class Profile extends StatelessWidget {
       backgroundColor: Colors.amber,
       body: Center(
         child: ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, TabNavigatorRoutes.itemDetails);
+            onPressed: () async {
+              try {
+                await DioHelper.getData(url: 'produckts');
+              } on DioError catch (e) {
+                log(e.response!.statusCode.toString());
+              } catch (e) {
+                log('message error');
+              }
             },
-            child: const Text('Go To Details')),
+            child: Text('call API')),
       ),
     );
   }
@@ -193,9 +203,9 @@ class Search extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, TabNavigatorRoutes.itemDetails);
+              DioHelper.getData(url: 'products');
             },
-            child: Text('Go To Details')),
+            child: Text('call API')),
       ),
     );
   }
