@@ -25,7 +25,7 @@ class DioHelper {
         return handler.next(options);
       },
       onResponse: (Response response, ResponseInterceptorHandler handler) {
-        log(response.isRedirect.toString());
+        log(response.toString());
 
         // Do something with response data.
         // If you want to reject the request with a error message,
@@ -34,6 +34,7 @@ class DioHelper {
       },
       onError: (DioError e, ErrorInterceptorHandler handler) {
         // e.requestOptions.path = 'products';
+        log('Error has occurred');
         DioHelper.getData(url: 'products');
         // Do something with response error.
         // If you want to resolve the request with some custom data,

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:vault/src/core/components/dropdown_widget.dart';
 import 'package:vault/src/core/components/side_nav_bar.dart';
 import 'package:vault/src/core/helper/network/dio_helper.dart';
+import 'package:vault/src/modules/splash/splash_view.dart';
 import 'package:vault/src/modules/time_off/time_off_view.dart';
 import 'package:vault/src/modules/time_tracking/time_tracking_view.dart';
 
@@ -20,7 +21,8 @@ class AppRouter {
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        // return MaterialPageRoute(builder: (context) => const DashBoard());
+        return MaterialPageRoute(builder: (context) => const SplashView());
+      case '/bottom':
         return MaterialPageRoute(
           builder: (_) => MultiProvider(
             providers: [
@@ -46,6 +48,7 @@ class AppRouter {
             ])),
           ),
         );
+
       default:
         return null;
     }
@@ -94,7 +97,7 @@ class Profile extends StatelessWidget {
         child: ElevatedButton(
             onPressed: () async {
               try {
-                await DioHelper.getData(url: 'produckts');
+                await DioHelper.getData(url: 'products');
               } on DioError catch (e) {
                 log(e.response!.statusCode.toString());
               } catch (e) {
