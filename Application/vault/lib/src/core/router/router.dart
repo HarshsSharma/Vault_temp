@@ -11,6 +11,7 @@ import 'package:vault/src/modules/splash/splash_view.dart';
 import 'package:vault/src/modules/time_off/time_off_view.dart';
 import 'package:vault/src/modules/time_tracking/time_tracking_view.dart';
 
+import '../../modules/asset_tracker/view/dashboard.dart';
 import '../../modules/time_tracking/view_model/time_tracking_controller.dart';
 import '../components/persistent_nav_bar/item_model.dart';
 import '../components/persistent_nav_bar/persistent_nav_bar.dart';
@@ -39,12 +40,12 @@ class AppRouter {
                   const TimeOff(), TabItem.home, 'Home'),
               ItemModel(GlobalKey<NavigatorState>(), Icons.search,
                   const TimeTracking(), TabItem.search, 'Search'),
-              ItemModel(GlobalKey<NavigatorState>(), Icons.settings, Settings(),
-                  TabItem.settings, 'Settings'),
+              ItemModel(GlobalKey<NavigatorState>(), Icons.settings,
+                  const DashBoard(), TabItem.settings, 'Settings'),
               ItemModel(GlobalKey<NavigatorState>(), Icons.notifications_none,
                   const Profile(), TabItem.notification, 'Notifications'),
-              ItemModel(GlobalKey<NavigatorState>(), Icons.person, Profile(),
-                  TabItem.profile, 'Profile'),
+              ItemModel(GlobalKey<NavigatorState>(), Icons.person,
+                  const Profile(), TabItem.profile, 'Profile'),
             ])),
           ),
         );
