@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vault/src/modules/time_off/view_model/time_off_view_model.dart';
 import 'package:vault/src/modules/time_off/widgets/absence_item.dart';
 
 import '../../core/components/tap_bar.dart';
@@ -41,7 +43,11 @@ class AbsenseScreen extends StatelessWidget {
           Expanded(
               child: ListView.separated(
                   itemBuilder: (context, index) {
-                    return const AbsenceItem();
+                    return AbsenceItem(
+                      timeOffReq: context
+                          .watch<TimeOffViewModel>()
+                          .timesOffRequests[index],
+                    );
                   },
                   separatorBuilder: (context, index) {
                     return const Divider();

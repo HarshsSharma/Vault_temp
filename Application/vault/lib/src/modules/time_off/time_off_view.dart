@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vault/src/core/components/list_view_tab.dart';
 import 'package:vault/src/modules/time_off/time_off_details.dart';
 import 'package:vault/src/modules/time_off/time_off_req.dart';
+import 'package:vault/src/modules/time_off/view_model/time_off_view_model.dart';
 import 'package:vault/src/modules/time_off/widgets/absence_item.dart';
 import 'package:vault/src/modules/time_off/widgets/time_off_item.dart';
 
@@ -16,7 +18,6 @@ class TimeOff extends StatefulWidget {
 }
 
 class _TimeOffState extends State<TimeOff> {
-  int tab = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,13 +35,9 @@ class _TimeOffState extends State<TimeOff> {
               TabBarItem(label: 'My Time Off'),
               TabBarItem(label: 'Time Off Requests'),
             ],
-            onChanged: (value) {
-              setState(() {
-                tab = value;
-              });
-            },
+            onChanged: context.read<TimeOffViewModel>().toggleTimeOffTab,
           ),
-          if (tab == 0)
+          if (context.watch<TimeOffViewModel>().timeOffTab == 0)
             Container(
               color: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -61,7 +58,7 @@ class _TimeOffState extends State<TimeOff> {
                 ],
               ),
             ),
-          if (tab == 0)
+          if (context.watch<TimeOffViewModel>().timeOffTab == 0)
             Container(
               decoration: const BoxDecoration(
                   color: Color(0xffF6F6F6),
@@ -86,20 +83,36 @@ class _TimeOffState extends State<TimeOff> {
                   onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => tab == 0
-                            ? const TimeOffDetails()
-                            : const TimeOffRequests(),
+                        builder: (context) =>
+                            context.watch<TimeOffViewModel>().timeOffTab == 0
+                                ? const TimeOffDetails()
+                                : const TimeOffRequests(),
                       )),
                   listItem: (context, index) {
-                    return tab == 0 ? const TimeOffItem() : AbsenceItem();
+                    return context.watch<TimeOffViewModel>().timeOffTab == 0
+                        ? TimeOffItem(
+                            timeOff: context
+                                .watch<TimeOffViewModel>()
+                                .timesOff[index],
+                          )
+                        : AbsenceItem(
+                            timeOffReq: context
+                                .watch<TimeOffViewModel>()
+                                .timesOffRequests[index],
+                          );
                   },
                   separated: (context, index) {
                     return const Divider();
                   },
-                  length: 20))
+                  length: context.watch<TimeOffViewModel>().timeOffTab == 0
+                      ? context.watch<TimeOffViewModel>().timesOff.length
+                      : context
+                          .watch<TimeOffViewModel>()
+                          .timesOffRequests
+                          .length))
         ],
       ),
-      floatingActionButton: tab == 0
+      floatingActionButton: context.watch<TimeOffViewModel>().timeOffTab == 0
           ? FloatingActionButton(
               onPressed: () {
                 Navigator.push(

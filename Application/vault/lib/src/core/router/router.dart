@@ -7,11 +7,13 @@ import 'package:provider/provider.dart';
 import 'package:vault/src/core/components/dropdown_widget.dart';
 import 'package:vault/src/core/components/side_nav_bar.dart';
 import 'package:vault/src/core/helper/network/dio_helper.dart';
+import 'package:vault/src/modules/asset_tracker/view/scanned_assets_view.dart';
 import 'package:vault/src/modules/splash/splash_view.dart';
 import 'package:vault/src/modules/time_off/time_off_view.dart';
+import 'package:vault/src/modules/time_off/view_model/time_off_view_model.dart';
 import 'package:vault/src/modules/time_tracking/time_tracking_view.dart';
 
-import '../../modules/asset_tracker/view/dashboard.dart';
+import '../../modules/asset_tracker/view/dashboard_view.dart.dart';
 import '../../modules/time_tracking/view_model/time_tracking_controller.dart';
 import '../components/persistent_nav_bar/item_model.dart';
 import '../components/persistent_nav_bar/persistent_nav_bar.dart';
@@ -31,6 +33,10 @@ class AppRouter {
                 create: (context) => TimeTrackingViewModel(),
                 lazy: true,
               ),
+              ChangeNotifierProvider(
+                create: (context) => TimeOffViewModel(),
+                lazy: true,
+              ),
             ],
             child: App(
                 navModel: NavModel({
@@ -45,7 +51,7 @@ class AppRouter {
               ItemModel(GlobalKey<NavigatorState>(), Icons.notifications_none,
                   const Profile(), TabItem.notification, 'Notifications'),
               ItemModel(GlobalKey<NavigatorState>(), Icons.person,
-                  const Profile(), TabItem.profile, 'Profile'),
+                  const ScannedAssets(), TabItem.profile, 'Profile'),
             ])),
           ),
         );

@@ -1,47 +1,41 @@
 import 'package:flutter/material.dart';
-
-import '../time_off_details.dart';
+import 'package:vault/src/modules/time_off/model/time_off_model.dart';
 
 class TimeOffItem extends StatelessWidget {
-  const TimeOffItem({super.key});
+  final TimeOffModel timeOff;
+  const TimeOffItem({super.key, required this.timeOff});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      // onTap: () {
-      //   // Navigator.push(
-      //   //     context,
-      //   //     MaterialPageRoute(
-      //   //       builder: (context) => const TimeOffDetails(),
-      //   //     ));
-      // },
       title: Row(
-        children: const [
-          Icon(
-            Icons.work_outline_sharp,
-            color: Colors.blue,
-          ),
+        children: [
+          timeOff.icon!,
           SizedBox(width: 5),
           Text(
-            'Holiday',
+            timeOff.type!,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
         ],
       ),
-      subtitle: const Text(
-        '4 days (12-Nov-19 - 15-Nov-19)',
-        style: TextStyle(fontSize: 14, height: 1.8),
+      subtitle: Text(
+        timeOff.duration!,
+        style: const TextStyle(fontSize: 14, height: 1.8),
       ),
       trailing: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
-        children: const [
+        children: [
           Text(
-            'Approved',
-            style: TextStyle(color: Color(0xff14CB43), fontSize: 18),
+            timeOff.status!,
+            style: TextStyle(
+                color: timeOff.status == 'Approved'
+                    ? Color(0xff14CB43)
+                    : Color(0xffFF0000),
+                fontSize: 18),
           ),
           SizedBox(height: 5),
           Text(
-            '28-Mar-23',
+            timeOff.statusDate!,
             style: TextStyle(color: Colors.grey),
           ),
         ],
