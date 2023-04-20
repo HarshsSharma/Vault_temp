@@ -2,14 +2,48 @@
 
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:vault/src/core/helper/service/service.dart';
 
 import '../../../core/components/qr_scanner.dart';
-import '../controller/scan_conroller.dart';
+import '../view_model/scan_view_model.dart';
 
 // ignore: must_be_immutable
-class ScanQr extends StatelessWidget {
+class ScanQr extends StatefulWidget {
   const ScanQr({super.key});
+
+  @override
+  State<ScanQr> createState() => _ScanQrState();
+}
+
+class _ScanQrState extends State<ScanQr> with WidgetsBindingObserver {
+  bool isGranted = false;
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    requestPermission();
+    super.initState();
+  }
+
+  void requestPermission() async {
+    isGranted = await PermissionService.requestPermission(Permission.camera);
+    if (isGranted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // PermissionService.requestPermission(Permission
+    //     .camera); //this will check the status of permission when the user returns back from the settings page.
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +118,7 @@ class ScanQr extends StatelessWidget {
                                   .values
                                   .length
                                   .toString(),
-                              style: TextStyle(fontSize: 16)),
+                              style: const TextStyle(fontSize: 16)),
                         ),
                       ],
                     )

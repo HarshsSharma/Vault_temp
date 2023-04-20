@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:provider/provider.dart';
 import 'package:vault/src/core/helper/extentions/media_query.dart';
-import 'package:vault/src/modules/asset_tracker/view/scan_qr.dart';
+import 'package:vault/src/core/helper/service/service.dart';
+import 'package:vault/src/modules/asset_tracker/view/scan_qr_view.dart';
 
 import '../../../core/components/list_view_tab.dart';
-import '../controller/scan_conroller.dart';
+import '../view_model/scan_view_model.dart';
 
 class DashBoard extends StatelessWidget {
   const DashBoard({super.key});
@@ -46,14 +48,8 @@ class DashBoard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: MaterialButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ChangeNotifierProvider(
-                                  create: (context) => ScanViewModel(),
-                                  child: const ScanQr(),
-                                )));
+                  onPressed: () async {
+                    context.read<ScanViewModel>().navigate(context);
                   },
                   elevation: 0,
                   height: context.height * .08,
