@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vault/main.dart';
 import 'package:vault/src/core/components/list_view_tab.dart';
 import 'package:vault/src/modules/time_off/time_off_details.dart';
 import 'package:vault/src/modules/time_off/time_off_req.dart';
@@ -23,7 +24,7 @@ class _TimeOffState extends State<TimeOff> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xff161652),
+        backgroundColor: settings.mainColor,
         toolbarHeight: kToolbarHeight,
         title: const Text('Time Off'),
         actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.menu))],
@@ -121,7 +122,7 @@ class _TimeOffState extends State<TimeOff> {
                       builder: (context) => const AddTimeOff(),
                     ));
               },
-              backgroundColor: const Color(0xff161652),
+              backgroundColor:  settings.mainColor,
               child: const Icon(Icons.add),
             )
           : null,

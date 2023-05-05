@@ -52,7 +52,21 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
-
+flavorDimensions "Vault"
+productFlavors {
+        dev {
+            dimension "Vault"
+            applicationIdSuffix ".dev"
+            resValue "string", "app_name", "Vault Dev"
+            versionNameSuffix ".dev"
+        }
+        prod {
+            dimension "Vault"
+            applicationIdSuffix ".prod"
+            resValue "string", "app_name", "Vault Prod"
+            versionNameSuffix ".prod"
+        }
+    }
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

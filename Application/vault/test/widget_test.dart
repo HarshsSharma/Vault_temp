@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:vault/appconfig.dart';
 import 'package:vault/src/core/router/router.dart';
 import 'package:vault/src/my_app.dart';
 
@@ -15,6 +16,7 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp(
       appRouter: AppRouter(),
+    //  config: AppConfig(appName: 'appName', flavor: 'flavor'),
     ));
 
     // Verify that our counter starts at 0.

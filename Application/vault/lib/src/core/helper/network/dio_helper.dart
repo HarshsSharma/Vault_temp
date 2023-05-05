@@ -5,12 +5,12 @@ import 'package:dio/dio.dart';
 class DioHelper {
   static late Dio _dio;
 
-  static init() {
+  static init(String baseUrl) {
     _dio = Dio(
       BaseOptions(
         connectTimeout: const Duration(seconds: 5),
         receiveTimeout: const Duration(seconds: 5),
-        baseUrl: 'https://dummyjson.com/',
+        baseUrl: baseUrl,
         receiveDataWhenStatusError: true,
       ),
     );
